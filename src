@@ -1,0 +1,49 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import plotly.express as px
+
+# Dados fictícios de cobertura vacinal para simulação
+data = {
+    'Vacina': ['Hepatite A', 'Pneumocócica', 'Meningocócica', 'DTP', 'Tríplice Viral (1ª dose)', 'Tríplice Viral (2ª dose)', 'Poliomielite', 'Febre Amarela', 'BCG', 'Hepatite B', 'Rotavírus', 'Varicela', 'HPV'],
+    'Cobertura 2022 (%)': [73, 71, 75, 67, 80, 58, 67, 61, 90, 85, 77, 73, 50],
+    'Cobertura 2023 (%)': [79, 78, 80, 75, 86, 62, 75, 67, 63, 60, 76, 72, 80]
+}
+
+df = pd.DataFrame(data)
+
+# Gráfico de barras para comparar coberturas vacinais entre 2022 e 2023
+plt.figure(figsize=(12, 8))
+sns.barplot(x='Cobertura 2022 (%)', y='Vacina', data=df, color='blue', alpha=0.6, label='2022')
+sns.barplot(x='Cobertura 2023 (%)', y='Vacina', data=df, color='green', alpha=0.6, label='2023')
+plt.xlabel('Cobertura Vacinal (%)')
+plt.ylabel('Vacinas')
+plt.title('Cobertura Vacinal Infantil no Brasil: 2022 vs 2023')
+plt.legend()
+plt.show()
+
+# Descrição do Gráfico de Barras
+print("\033[1mDescrição do Gráfico de Barras:\033[0m Este gráfico compara as coberturas vacinais de 2022 e 2023 para diferentes vacinas. As barras azuis representam a cobertura em 2022, enquanto as barras verdes mostram a cobertura em 2023. O gráfico destaca os aumentos e reduções na cobertura vacinal ao longo dos dois anos.")
+
+# Gráfico 3D para visualizar a cobertura vacinal em 2023
+fig = px.scatter_3d(df, x='Vacina', y='Cobertura 2023 (%)', z='Cobertura 2022 (%)', color='Vacina',
+                    title='Cobertura Vacinal Infantil 3D: 2022 vs 2023')
+fig.update_layout(scene=dict(
+                    xaxis_title='Vacina',
+                    yaxis_title='Cobertura 2023 (%)',
+                    zaxis_title='Cobertura 2022 (%)'),
+                    width=1000,  # Largura do gráfico
+                    height=800,  # Altura do gráfico
+                    margin=dict(l=0, r=0, b=0, t=40))  # Margens do gráfico
+fig.show()
+
+# Descrição do Gráfico 3D
+print("\033[1mDescrição do Gráfico 3D:\033[0m Este gráfico de dispersão 3D interativo mostra a cobertura vacinal em 2022 (eixo Z) e 2023 (eixo Y) para diferentes vacinas (eixo X). As cores representam diferentes vacinas, e o gráfico facilita a comparação visual das coberturas ao longo dos dois anos, destacando variações e tendências.")
+
+# Gráfico de linha interativo para tendências de cobertura vacinal
+fig = px.line(df.melt(id_vars='Vacina', var_name='Ano', value_name='Cobertura (%)'),
+              x='Vacina', y='Cobertura (%)', color='Ano', title='Tendências de Cobertura Vacinal Infantil: 2022-2023')
+fig.show()
+
+# Descrição do Gráfico de Linha
+print("\033[1mDescrição do Gráfico de Linha Interativo:\033[0m Este gráfico de linha interativo mostra as tendências de cobertura vacinal para cada vacina entre 2022 e 2023. As linhas representam diferentes anos, permitindo uma análise detalhada das mudanças na cobertura vacinal ao longo do tempo.")
